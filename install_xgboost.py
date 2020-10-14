@@ -20,7 +20,7 @@ if __name__ == "__main__":
 
     # Compute DMLC xgboost version, i.e: 1.1.0
     xgboost_version = os.environ["XGBOOST_BASE_VERSION"]
-    [dmlc_version] = re.findall(r"^(.*?)-criteo", xgboost_version)
+    [dmlc_version] = re.findall(r"^(.*?)-", xgboost_version)
 
     os.chdir("jvm-packages")
     run("mvn -q -B versions:set -DnewVersion=" + xgboost_version)
