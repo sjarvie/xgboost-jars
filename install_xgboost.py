@@ -13,10 +13,16 @@ import os
 import re
 from _internal import run, sed_inplace
 
+# disable OPENMP
+WITH_OPENMP=False
 
 if __name__ == "__main__":
     os.chdir("xgboost")
     xgboost_dir = os.getcwd()
+     
+    openmp_build_flag = ""
+    if not WITH_OPENMP:
+        openmp_build_flag = " -DUSE_OPENMP=OFF"
 
     # Compute DMLC xgboost version, i.e: 1.1.0
     xgboost_version = os.environ["XGBOOST_BASE_VERSION"]
@@ -43,8 +49,8 @@ if __name__ == "__main__":
                 "<artifactId>xgboost-jvm_" + scala_binary_version, regex=True)
     # HACK: build release.
     sed_inplace("create_jni.py",
-                "cmake ..",
-                "cmake .. -DCMAKE_BUILD_TYPE=Release ")
+                "cmake .. " + openmp_build_flag,
+                "cmake .. -DCMAKE_BUILD_TYPE=Release " + openmp_build_flag)
 
     os.chdir("xgboost4j")
     sed_inplace("pom.xml",
