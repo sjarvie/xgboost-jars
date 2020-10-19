@@ -22,7 +22,7 @@ if __name__ == "__main__":
      
     openmp_build_flag = ""
     if not WITH_OPENMP:
-        openmp_build_flag = " -DUSE_OPENMP=OFF"
+        openmp_build_flag = " -DUSE_OPENMP=OFF -DDISABLE_OPENMP"
 
     # Compute DMLC xgboost version, i.e: 1.1.0
     xgboost_version = os.environ["XGBOOST_BASE_VERSION"]
